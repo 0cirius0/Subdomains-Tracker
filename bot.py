@@ -28,12 +28,13 @@ async def on_ready():
     )
     print(client.guilds)
     user=client.get_user(int(os.getenv('ME')))
-    #await user.send('Hello')
-    in_sec=int(os.getenv('DELAY'))                        #Change this
+    await user.send('Hello! Script is Running!')
+    in_sec=int(os.getenv('DELAY'))*60*60                        
     print(in_sec)
-    await test.start()
-    #chec=sched.add_job(test,'interval', seconds = 10)        #Figure out how to call the functions => call execute and check
- 
+    out.start()
+    chec=sched.add_job(execute,'interval', seconds = in_sec)        
+    chec2=sched.add_job(takeover,'interval',seconds= in_sec)
+
 @client.event
 async def on_message(message):
     if(message.author == client.user):      #Ignore messages by bot itself
@@ -60,15 +61,24 @@ async def on_message(message):
                     await message.author.send("Added!")
                     command_file.close()
 
-@tasks.loop(seconds=10.0)
-async def test():                     #Problem: Holds the main thread
-    print("Worked")
-    await atest()
-    time.sleep(10)
-    #test2()              =>     Run this function in background
-    print("Awake")
+@tasks.loop(seconds=200.0)
+async def out():  
+    print("Inside out")                  
+    data=check("new")
+    if(data):
+        user=client.get_user(int(os.getenv('ME')))
+        await user.send("New Subdomain/s Found")
+        for l in data:
+            await user.send(l.strip())         
+    data=check("to")
+    if(data):
+        user=client.get_user(int(os.getenv('ME')))
+        await user.send("Subdomain Takeover Vulnerable Domain Found")
+        for l in data:
+            await user.send(l.strip())  
 
 def execute():
+    print("Inside execute")
     commands=open("./tmp/commands_list","r+")   
     domains=open("./tmp/domains_list","r+")
     lines=commands.readlines()
@@ -90,6 +100,7 @@ def execute():
     domains.close() 
 
 def run(what,where,flag):
+    print("Inside run")
     cmd=what+" "+where+" > ./tmp/"+where+"_sub.txt" 
     cmd2=what+" "+where+" >> ./tmp/"+where+"_sub.txt"                              
     print(cmd)
@@ -100,31 +111,45 @@ def run(what,where,flag):
         process = subprocess.Popen(cmd2, shell=True)
         process.wait()
        
+def check(con):
+    print("Inside check")                                                
+    if(con=="new"):
+        sites=open("./tmp/domains_list","r+")
+        sites_lines=sites.readlines()
+        loc="./tmp/"
+        for a in sites_lines:
+            fname=a.strip()+"_sub.txt"
+            f2name="."+fname
+            subprocess.Popen("touch "+loc+"changes",shell=True).wait()
+            if(os.path.isfile(loc+f2name)):
+                subprocess.Popen("diff "+loc+fname+" "+loc+f2name+" | grep '<' | sed 's/^< //g' > ./tmp/changes",shell=True).wait()          
+                subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
+            else:
+                subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
+            data=[]
+            if(os.stat(loc+"changes").st_size != 0):
+                f=open("./tmp/changes","r")
+                data=f.readlines()
+                f.close()
+                subprocess.Popen("rm ./tmp/changes",shell=True).wait()                                                       
+        sites.close()
+    if(con=="to"):
+        data=[]
+        if(os.path.isfile("./tmp/takeover")):
+            if(os.stat("./tmp/takeover").st_size != 0):
+                file1=open("./tmp/takeover","r")
+                data=file1.readlines()
+                file1.close()
+                subprocess.Popen("rm ./tmp/takeover",shell=True).wait()
+    return data
 
-def check():
-    sites=open("./tmp/domains_list","r+")
-    sites_lines=sites.readlines()
-    loc="./tmp/"
-    for a in sites_lines:
-        fname=a.strip()+"_sub.txt"
-        f2name="."+fname
-        if(os.path.isfile(loc+f2name)):
-            subprocess.Popen("diff "+loc+fname+" "+loc+f2name+" | grep '<' | sed 's/^< //g' > ./tmp/changes_"+a.strip(),shell=True).wait()          
-            subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
-        else:
-            subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
-        #if(os.path.isfile(loc+"changes_"+a.strip()):
-            
-    sites.close()
-
-async def atest():
-    user1=client.get_user(int(os.getenv('ME')))
-    print("SSleeping")
-    #time.sleep(10)
-    await user1.send("OK")
-
-def test2():
-    time.sleep(20)
-    print("Slept")
-    
+def takeover():
+    print("Inside takeover")
+    dom=open("./tmp/domains_list","r")
+    lines=dom.readlines()
+    for l in lines:
+        b=l.strip()
+        subprocess.Popen("subjack -w ./tmp/"+b+"_sub.txt >> ./tmp/takover",shell=True)
+    dom.close()
+           
 client.run(TOKEN)
