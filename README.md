@@ -1,8 +1,8 @@
 # Subdomains-Tracker
 A Discord Bot to help with Recon Stuff
 
-It will scan the target at regular intervals and message user if 
-* any new domain is added => New Domain = More attack vectors
+It will scan the target at regular intervals and message the user if 
+* any new domain is found => New Domain = More attack vectors
 * a older domain becomes vulnerable for subdomain takeover
 
 This bot should be run on a VPS(or either you are among the ones whose system runs 24/7)
@@ -49,5 +49,7 @@ It also runs subjack at every 12 hours to check if any present subdomain becomes
 
 ### Note:
 If you found any error while running the script do let me know through raising an issue on github, I'll try to help as much as I can.
+
+Do let me know if aything else that can be added.
 
 - Do check that subjack is correctly installed and GO directory is present in the PATH variable.
