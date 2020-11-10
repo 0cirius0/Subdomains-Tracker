@@ -7,7 +7,9 @@ It will scan the target at regular intervals and message user if
 
 This bot should be run on a VPS(or either you are among the ones whose system runs 24/7)
 
-Run the script and leave it running in background.
+Run the script and leave it running in background.Once the script runs it will send a message to you through discord to check whether everything is set up correctly.
+
+You can message the bot commands by replying to the bot.
 ## Setup
 1. Clone the repo.
 2. Head over to [Discord Developer](https://discord.com/developers/applications) and create a new application.
