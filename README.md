@@ -5,7 +5,7 @@ It will scan the target at regular intervals and message me if
 * any new domain is added => New Domain = More attack vectors
 * a older domain becomes vulnerable for subdomain takeover
 
-##Setup
+# Setup
 1. Clone the repo.
 2. Head over to [Discord Developer](https://discord.com/developers/applications) and create a new application.
 3. Go to Bot menu and click *add bot*.
@@ -24,7 +24,7 @@ DELAY="16"
 ``` 
 > Here Delay is the number of hours after which the scan would take place.You can modify to fit it according to your needs.
 
-##Commands
+# Commands
 
 Currently, there are only two commands for the bot,
 * `Track add domain DOMAIN_NAME`
@@ -36,7 +36,7 @@ Currently, there are only two commands for the bot,
 
 > All the command and domains are fetched from REPO\_DIRECTORY/tmp/domains\_list and REPO\_DIRECTORY/tmp/commands\_list which can be cross checked and edited manually.
 
-##How this works
+# How this works
 
 The Bot script will run each command given in ~/tmp/commansd\_list at regular specified intervals with all the domains specified in ~/tmp/domains\_list to check for new subdomains under the specified domain and alerts through a message of any new subdomain found.
 It also runs subjack at every 12 hours to check if any present subdomain becomes vulnerable to subdomain takeover and alerts accordingly.
