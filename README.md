@@ -5,6 +5,9 @@ It will scan the target at regular intervals and message user if
 * any new domain is added => New Domain = More attack vectors
 * a older domain becomes vulnerable for subdomain takeover
 
+This bot should be run on a VPS(or either you are among the ones whose system runs 24/7)
+
+Run the script and leave it running in background.
 ## Setup
 1. Clone the repo.
 2. Head over to [Discord Developer](https://discord.com/developers/applications) and create a new application.
@@ -32,7 +35,7 @@ Currently, there are only two commands for the bot,
 * `Track add command COMMAND_NAME`
 > Ex: Track add command amass enum -d
 
-> You can add more than 1 subdomain enumeration tool command(as far as that tool is installed on the system and set up correctly).
+> You can add more than 1 subdomain enumeration tool's command(as far as that tool is installed on the system and set up correctly).
 
 > All the command and domains are fetched from REPO\_DIRECTORY/tmp/domains\_list and REPO\_DIRECTORY/tmp/commands\_list which can be cross checked and edited manually.
 
@@ -44,3 +47,5 @@ It also runs subjack at every 12 hours to check if any present subdomain becomes
 
 ### Note:
 If you found any error while running the script do let me know through raising an issue on github, I'll try to help as much as I can.
+
+- Do check that subjack is correctly installed and GO directory is present in the PATH variable.
