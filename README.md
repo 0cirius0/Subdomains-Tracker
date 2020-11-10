@@ -11,7 +11,7 @@ It will scan the target at regular intervals and message me if
 3. Go to Bot menu and click *add bot*.
 4. Allow both *Privileged Gateway Intents*.
 5. Copy the TOKEN and store it, this would be your DISCORD_TOKEN.
-6. Go to Oauth2 tab, copy the Client ID and complete this url **https://discord.com/api/oauth2/authorize?client_id=<PASTE_YOUR_CLIENTID_HERE\>&permissions=2048&scope=bot**
+6. Go to Oauth2 tab, copy the Client ID and complete this url **https://discord.com/api/oauth2/authorize?client_id=\<PASTE_YOUR_CLIENTID_HERE\>&permissions=2048&scope=bot**
 7. Make your own discord server and then visit the above URL to bring bot in the server.
 8. Open Discord app and allow developer mode in your account.
 9. Right click on your server icon and Copy ID which would be the GUILD ID, similarly right click on your avatar and copy your User ID(named ME in .env file).
