@@ -54,14 +54,15 @@ async def on_message(message):
                     await message.author.send("Added!")
                     domain_file.close()
                 elif(words[2].lower() == "command"):
-                    com=words[3]
+                    a=' '
+                    com=a.join(words[3:])
                     command_file=open("./tmp/commands_list","a+")
                     command_file.write('\n')
                     command_file.write(com)
                     await message.author.send("Added!")
                     command_file.close()
 
-@tasks.loop(seconds=200.0)
+@tasks.loop(seconds=43200.0)
 async def out():  
     print("Inside out")                  
     data=check("new")
