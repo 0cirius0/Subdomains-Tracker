@@ -28,7 +28,8 @@ ME="65595694492*****"
 DELAY="16"
 ``` 
 > Here Delay is the number of hours after which the scan would take place.You can modify to fit it according to your needs.
-
+Install all python dependencies
+> pip3 -r requirements.txt
 ## Commands
 
 Currently, there are only two commands for the bot,
