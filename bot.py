@@ -49,28 +49,40 @@ async def on_message(message):
                     print("OK")
                     dom=words[3]
                     domain_file=open("./tmp/domains_list","a+")
-                    domain_file.write('\n')
-                    domain_file.write(dom)			     
+                    domain_file.write(dom+'\n')			     
                     await message.author.send("Added!")
                     domain_file.close()
                 elif(words[2].lower() == "command"):
                     a=' '
                     com=a.join(words[3:])
                     command_file=open("./tmp/commands_list","a+")
-                    command_file.write('\n')
-                    command_file.write(com)
+                    command_file.write(com+'\n')
                     await message.author.send("Added!")
                     command_file.close()
+            if(words[1].lower() == "rm"):
+                if(words[2].lower() == "domain"):
+                    rem=words[3].lower()
+                    domain_file=open("./tmp/domains_list","r")
+                    lines=domain_file.readlines()
+                    domain_file=open("./tmp/domains_list","w")
+                    for line in lines:
+                        if(line.strip('\n')==rem):
+                            continue
+                        else:
+                            domain_file.write(line)
+                    await message.author.send("Removed")
+                    domain_file.close()
 
-@tasks.loop(seconds=43200.0)
+@tasks.loop(hours=6)
 async def out():  
-    print("Inside out")                  
+    print("Inside out1")                  
     data=check("new")
     if(data):
         user=client.get_user(int(os.getenv('ME')))
         await user.send("New Subdomain/s Found")
         for l in data:
             await user.send(l.strip())         
+    print("Inside out2")
     data=check("to")
     if(data):
         user=client.get_user(int(os.getenv('ME')))
@@ -113,29 +125,30 @@ def run(what,where,flag):
         process.wait()
        
 def check(con):
-    print("Inside check")                                                
+    print("Inside check")  
+    data=[]                                              
     if(con=="new"):
-        sites=open("./tmp/domains_list","r+")
-        sites_lines=sites.readlines()
-        loc="./tmp/"
-        for a in sites_lines:
-            fname=a.strip()+"_sub.txt"
-            f2name="."+fname
-            subprocess.Popen("touch "+loc+"changes",shell=True).wait()
-            if(os.path.isfile(loc+f2name)):
-                subprocess.Popen("diff "+loc+fname+" "+loc+f2name+" | grep '<' | sed 's/^< //g' > ./tmp/changes",shell=True).wait()          
-                subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
-            else:
-                subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
-            data=[]
-            if(os.stat(loc+"changes").st_size != 0):
-                f=open("./tmp/changes","r")
-                data=f.readlines()
-                f.close()
-                subprocess.Popen("rm ./tmp/changes",shell=True).wait()                                                       
-        sites.close()
+        print("debug")
+        if(os.path.isfile("./tmp/domains_list")):
+            sites=open("./tmp/domains_list","r+")
+            sites_lines=sites.readlines()
+            loc="./tmp/"
+            for a in sites_lines:
+                fname=a.strip()+"_sub.txt"
+                f2name="."+fname
+                subprocess.Popen("touch "+loc+"changes",shell=True).wait()
+                if(os.path.isfile(loc+f2name)):
+                    subprocess.Popen("diff "+loc+fname+" "+loc+f2name+" | grep '<' | sed 's/^< //g' > ./tmp/changes",shell=True).wait()          
+                    subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
+                else:
+                    subprocess.Popen("cp "+loc+fname+" "+loc+f2name,shell=True).wait()
+                if(os.stat(loc+"changes").st_size != 0):
+                    f=open("./tmp/changes","r")
+                    data=f.readlines()
+                    f.close()
+                    subprocess.Popen("rm ./tmp/changes",shell=True).wait()                                                       
+            sites.close()
     if(con=="to"):
-        data=[]
         if(os.path.isfile("./tmp/takeover")):
             if(os.stat("./tmp/takeover").st_size != 0):
                 file1=open("./tmp/takeover","r")
