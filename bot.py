@@ -60,6 +60,7 @@ async def on_message(message):
                     await message.author.send("Added!")
                     command_file.close()
             if(words[1].lower() == "rm"):
+                fl=False
                 if(words[2].lower() == "domain"):
                     rem=words[3].lower()
                     domain_file=open("./tmp/domains_list","r")
@@ -67,11 +68,34 @@ async def on_message(message):
                     domain_file=open("./tmp/domains_list","w")
                     for line in lines:
                         if(line.strip('\n')==rem):
+                            fl=True
                             continue
                         else:
                             domain_file.write(line)
-                    await message.author.send("Removed")
+                    if(fl):
+                        await message.author.send("Removed!")
+                        fl=False
+                    else:
+                        await message.author.send("Not Found")
                     domain_file.close()
+                if(words[2].lower() == "command"):
+                    a=' '
+                    rem=a.join(words[3:])
+                    command_file=open("./tmp/commands_list","r")
+                    lines=command_file.readlines()
+                    command_file=open("./tmp/commands_list","w")
+                    for line in lines:
+                        if(line.strip('\n')==rem):
+                            fl=True
+                            continue
+                        else:
+                            command_file.write(line)
+                    if(fl):
+                        await message.author.send("Removed!")
+                        fl=False
+                    else:
+                        await message.author.send("Not Found")
+                    command_file.close()
 
 @tasks.loop(hours=6)
 async def out():  
