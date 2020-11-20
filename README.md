@@ -46,7 +46,7 @@ Currently, there are only two commands for the bot,
 
 ## How this works
 
-The Bot script will run each command given in ~/tmp/commansd\_list at regular specified intervals with all the domains specified in ~/tmp/domains\_list to check for new subdomains under the specified domain and alerts through a message of any new subdomain found.
+The Bot script will run each command given in ~/tmp/commands\_list at regular specified intervals with all the domains specified in ~/tmp/domains\_list to check for new subdomains under the specified domain and alerts through a message of any new subdomain found.
 
 It also runs subjack at every 12 hours to check if any present subdomain becomes vulnerable to subdomain takeover and alerts accordingly.
 
