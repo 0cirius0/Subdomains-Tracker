@@ -97,7 +97,7 @@ async def on_message(message):
                         await message.author.send("Not Found")
                     command_file.close()
 
-@tasks.loop(hours=6)
+@tasks.loop(hours=12)
 async def out():  
     print("Inside out1")                  
     data=check("new")
