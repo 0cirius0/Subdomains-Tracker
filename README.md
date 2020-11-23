@@ -34,12 +34,16 @@ Install all python dependencies
 > pip3 -r requirements.txt
 ## Commands
 
-Currently, there are only two commands for the bot,
+Currently, there are only 4 commands for the bot,
 * `Track add domain DOMAIN_NAME`
->EX: Track add domain twitter.com 
+> Ex: Track add domain twitter.com 
 * `Track add command COMMAND_NAME`
 > Ex: Track add command amass enum -d
-
+* `Track rm domain DOMAIN_NAME`
+> Ex: Track rm domain twitter.com
+* `Track rm command COMMAND_NAME`
+> Ex: Track rm command amass enum -d
+ 
 > You can add more than 1 subdomain enumeration tool's command(as far as that tool is installed on the system and set up correctly).
 
 > All the command and domains are fetched from REPO\_DIRECTORY/tmp/domains\_list and REPO\_DIRECTORY/tmp/commands\_list which can be cross checked and edited manually.
