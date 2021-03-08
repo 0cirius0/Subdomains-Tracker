@@ -18,7 +18,19 @@ load_dotenv()
 TOKEN=os.getenv('DISCORD_TOKEN')
 GUILD=os.getenv('GUILD')
 
+print("""
 
+ (                                                                                                                     
+ )\ )             )    (                                                 *   )                         )               
+(()/(     (    ( /(    )\ )            )        )   (                  ` )  /(   (        )         ( /(     (    (    
+ /(_))   ))\   )\())  (()/(    (      (      ( /(   )\    (      (      ( )(_))  )(    ( /(    (    )\())   ))\   )(   
+(_))    /((_) ((_)\    ((_))   )\     )\  '  )(_)) ((_)   )\ )   )\    (_(_())  (()\   )(_))   )\  ((_)\   /((_) (()\  
+/ __|  (_))(  | |(_)   _| |   ((_)  _((_))  ((_)_   (_)  _(_/(  ((_)   |_   _|   ((_) ((_)_   ((_) | |(_) (_))    ((_) 
+\__ \  | || | | '_ \ / _` |  / _ \ | '  \() / _` |  | | | ' \)) (_-<     | |    | '_| / _` | / _|  | / /  / -_)  | '_| 
+|___/   \_,_| |_.__/ \__,_|  \___/ |_|_|_|  \__,_|  |_| |_||_|  /__/     |_|    |_|   \__,_| \__|  |_\_\  \___|  |_|   
+                                                                                                                       
+
+""")
 client = discord.Client(intents=intents)
 
 @client.event
@@ -27,6 +39,7 @@ async def on_ready():
         f'Logged in as {client.user}\n'        
     )
     print(client.guilds)
+    print("<--Ignore all the debug info below! You can now background the process-->")	
     user=client.get_user(int(os.getenv('ME')))
     await user.send('Hello! Script is Running!')
     in_sec=int(os.getenv('DELAY'))*60*60                        
