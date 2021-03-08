@@ -31,7 +31,7 @@ DELAY="16"
 
 Install all python dependencies
 
-> pip3 -r requirements.txt
+> pip3 install -r requirements.txt
 ## Commands
 
 Currently, there are only 4 commands for the bot,
