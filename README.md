@@ -1,5 +1,5 @@
 # Subdomains-Tracker
-A Discord Bot to help with Recon Stuff
+A script which utilizes Discord as front-end to help with Recon Stuff
 
 It will scan the target at regular intervals and message the user if 
 * any new domain is found => New Domain = More attack vectors
